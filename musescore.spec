@@ -42,11 +42,11 @@ BuildRequires:  portaudio-devel
 BuildRequires:  qt4-devel > 4:4.4
 BuildRequires:  qt4-linguist
 BuildRequires:  doxygen
-# BuildRequires:	qtsingleapplication-devel
+BuildRequires:  texlive-mf2pt1
 Requires:   qtscriptbindings
 Requires:   %{name}-fonts = %{version}-%{release}
 Requires:   soundfont2-default
-Provides:   mscore
+Provides:   musescore
 Obsoletes:  mscore
 
 %description
