@@ -3,8 +3,8 @@
 
 Summary:    Linux MusE Score Typesetter
 Name:       musescore
-Version:    1.2
-Release:    1
+Version:    1.1
+Release:    %mkrel 2
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -196,3 +196,18 @@ rm -rf %{buildroot}
 
 %files fonts
 %{_datadir}/fonts/%{shortname}
+
+
+%changelog
+* Mon Oct 31 2011 Thomas Spuhler <tspuhler@mandriva.org> 1.1-2mdv2012.0
++ Revision: 707958
+- added %%patch9 -p2 -b .enable-portaudio-by-default for audio to play out of the box
+
+* Sun Oct 30 2011 Thomas Spuhler <tspuhler@mandriva.org> 1.1-1
++ Revision: 707861
+- removed BuildRequires:	qtsingleapplication-devel, we use system version
+  added BuildRequires:  texlive-mf2pt1
+  changed Provides:   mscore to musescore
+- imported package musescore
+
+
