@@ -112,7 +112,7 @@ perl -pi -e 's,.*.ts\n,,g' share/locale/CMakeLists.txt
 rm rtf2html/rtf2html
 
 # (Fedora) Do not build the bundled qt scripting interface:
-sed -i 's|scriptgen||' CMakeLists.txt
+sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
 # (Fedora) Fix EOL encoding
 sed 's|\r||' rtf2html/README > tmpfile
