@@ -33,8 +33,6 @@ Patch5:     mscore-dso-linking.patch
 Patch6:     mscore-fix-gcc-warnings.patch
 # (Fedora) Use system qtsingleapplication
 Patch7:	    mscore-system-qtsingleapplication.patch
-Patch8:	    22-fix-casting.patch
-Patch9:	    14-enable-portaudio-by-default.patch
 BuildRequires:  cmake
 BuildRequires:  libalsa-devel
 BuildRequires:  jackit-devel
@@ -106,8 +104,6 @@ This package contains the musical notation fonts for use of MuseScore.
 %patch5 -p2 -b .dso-linking
 %patch6 -p2 -b .gcc-warnings
 %patch7 -p2 -b .qtsingleapp
-%patch8 -p2 -b .22-fix-casting
-%patch9 -p2 -b .enable-portaudio-by-default
 
 # only install .qm files
 perl -pi -e 's,.*.ts\n,,g' share/locale/CMakeLists.txt
