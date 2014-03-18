@@ -42,6 +42,7 @@ BuildRequires:  qt4-devel > 4:4.4
 BuildRequires:  qt4-linguist
 BuildRequires:  doxygen
 BuildRequires:  texlive-mf2pt1
+BuildRequires:  pkgconfig(QtWebKit)
 Requires:   qtscriptbindings
 Requires:   %{name}-fonts = %{version}-%{release}
 Requires:   soundfont2-default
