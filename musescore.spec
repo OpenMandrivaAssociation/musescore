@@ -3,8 +3,8 @@
 
 Summary:    Linux MusE Score Typesetter
 Name:       musescore
-Version:    1.1
-Release:    %mkrel 2
+Version:    1.3
+Release:    1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -33,8 +33,6 @@ Patch5:     mscore-dso-linking.patch
 Patch6:     mscore-fix-gcc-warnings.patch
 # (Fedora) Use system qtsingleapplication
 Patch7:	    mscore-system-qtsingleapplication.patch
-Patch8:	    22-fix-casting.patch
-Patch9:	    14-enable-portaudio-by-default.patch
 BuildRequires:  cmake
 BuildRequires:  libalsa-devel
 BuildRequires:  jackit-devel
@@ -44,6 +42,7 @@ BuildRequires:  qt4-devel > 4:4.4
 BuildRequires:  qt4-linguist
 BuildRequires:  doxygen
 BuildRequires:  texlive-mf2pt1
+BuildRequires:  pkgconfig(QtWebKit)
 Requires:   qtscriptbindings
 Requires:   %{name}-fonts = %{version}-%{release}
 Requires:   soundfont2-default
@@ -106,8 +105,6 @@ This package contains the musical notation fonts for use of MuseScore.
 %patch5 -p2 -b .dso-linking
 %patch6 -p2 -b .gcc-warnings
 %patch7 -p2 -b .qtsingleapp
-%patch8 -p2 -b .22-fix-casting
-%patch9 -p2 -b .enable-portaudio-by-default
 
 # only install .qm files
 perl -pi -e 's,.*.ts\n,,g' share/locale/CMakeLists.txt
@@ -116,7 +113,7 @@ perl -pi -e 's,.*.ts\n,,g' share/locale/CMakeLists.txt
 rm rtf2html/rtf2html
 
 # (Fedora) Do not build the bundled qt scripting interface:
-sed -i 's|scriptgen||' CMakeLists.txt
+sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
 # (Fedora) Fix EOL encoding
 sed 's|\r||' rtf2html/README > tmpfile
