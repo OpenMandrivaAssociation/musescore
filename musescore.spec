@@ -1,53 +1,53 @@
 %define srcname MuseScore
 %define shortname mscore
 
-Summary:    Linux MusE Score Typesetter
-Name:       musescore
-Version:    1.3
-Release:    1
+Summary:	Linux MusE Score Typesetter
+Name:		musescore
+Version:	1.3
+Release:	2
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
-License:    GPLv2 and LGPLv2+ and LGPLv3
-Url:        http://musescore.org
-Group:      Publishing
-Source0:    http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{shortname}-%{version}.tar.bz2
+License:	GPLv2 and LGPLv2+ and LGPLv3
+Url:		http://musescore.org
+Group:		Publishing
+Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{shortname}-%{version}.tar.bz2
 # (Fedora) For building the jazz font
-Source1:    mscore-ConvertFont.ff
+Source1:	mscore-ConvertFont.ff
 # (Fedora) For mime types
-Source2:    mscore.xml
-Patch0:     mscore-1.0-awl-fix-underlink.patch
-Patch1:     mscore-1.0-disable-uitools.patch
+Source2:	mscore.xml
+Patch0:		mscore-1.0-awl-fix-underlink.patch
+Patch1:		mscore-1.0-disable-uitools.patch
 # (Fedora) use the system default soundfont instead of the deleted, non-free, one 
-Patch2:     mscore-use-default-soundfont.patch
+Patch2:		mscore-use-default-soundfont.patch
 # (Fedora) don't build the common files (font files, wallpapers, demo song,
 # instrument list) into the binary executable to reduce its size. This is also
 # useful to inform the users about the existence of different choices for common
 # files. The font files need to be separated due to the font packaging guidelines.
-Patch3:     mscore-separate-commonfiles.patch
+Patch3:		mscore-separate-commonfiles.patch
 # (Fedora) Split the large documentation into a separate package
-Patch4:     mscore-split-doc.patch
+Patch4:		mscore-split-doc.patch
 # (Fedora) Fix DSO linking.
-Patch5:     mscore-dso-linking.patch
+Patch5:		mscore-dso-linking.patch
 # (Fedora) Fix some gcc warnings
-Patch6:     mscore-fix-gcc-warnings.patch
+Patch6:		mscore-fix-gcc-warnings.patch
 # (Fedora) Use system qtsingleapplication
-Patch7:	    mscore-system-qtsingleapplication.patch
-BuildRequires:  cmake
-BuildRequires:  libalsa-devel
-BuildRequires:  jackit-devel
-BuildRequires:  fluidsynth-devel
-BuildRequires:  portaudio-devel
-BuildRequires:  qt4-devel > 4:4.4
-BuildRequires:  qt4-linguist
-BuildRequires:  doxygen
-BuildRequires:  texlive-mf2pt1
-BuildRequires:  pkgconfig(QtWebKit)
-Requires:   qtscriptbindings
-Requires:   %{name}-fonts = %{version}-%{release}
-Requires:   soundfont2-default
-Provides:   musescore
-Obsoletes:  mscore
+Patch7:		mscore-system-qtsingleapplication.patch
+BuildRequires:	cmake
+BuildRequires:	libalsa-devel
+BuildRequires:	jackit-devel
+BuildRequires:	fluidsynth-devel
+BuildRequires:	portaudio-devel
+BuildRequires:	qt4-devel > 4:4.4
+BuildRequires:	qt4-linguist
+BuildRequires:	doxygen
+BuildRequires:	texlive-mf2pt1
+BuildRequires:	pkgconfig(QtWebKit)
+Requires:		qtscriptbindings
+Requires:		%{name}-fonts = %{version}-%{release}
+Requires:		soundfont2-default
+Provides:		musescore
+Obsoletes:		mscore
 
 %description
 MuseScore stands for Linux MusE Score Typesetter.
@@ -67,12 +67,12 @@ Features:
       - print or create pdf files
 
 %package doc
-Summary:       MuseScore documentation
-Group:         Development/Other
-License:       CC-BY
-Requires:      %{name} = %{version}-%{release}
-BuildArch:     noarch
-Obsoletes:     mscore-doc
+Summary:	MuseScore documentation
+Group:		Development/Other
+License:	CC-BY
+Requires:	%{name} = %{version}-%{release}
+BuildArch:	noarch
+Obsoletes:	mscore-doc
 
 %description doc
 MuseScore is a free cross platform WYSIWYG music notation program.
@@ -80,14 +80,14 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the user manual of MuseScore in different languages.
 
 %package fonts
-Summary:       MuseScore fonts
-Group:         Publishing
-License:       GPL+ with exceptions and OFL
-BuildArch:     noarch
-BuildRequires: fontforge
-BuildRequires: tetex
-BuildRequires: t1utils
-Obsoletes:     mscore-fonts
+Summary:	MuseScore fonts
+Group:		Publishing
+License:	GPL+ with exceptions and OFL
+BuildArch:	noarch
+BuildRequires:	fontforge
+BuildRequires:	tetex
+BuildRequires:	t1utils
+Obsoletes:		mscore-fonts
 
 %description fonts
 MuseScore is a free cross platform WYSIWYG music notation program.
@@ -147,7 +147,6 @@ pushd ../%{shortname}/fonts
 popd
 
 %install
-rm -rf %{buildroot}
 %{makeinstall_std} -C build
 
 # Install fonts
@@ -161,21 +160,19 @@ install -D -pm 644 packaging/%{shortname}.1 %{buildroot}/%{_mandir}/man1/%{short
 install -D -pm 644 %{SOURCE2} %{buildroot}/%{_datadir}/mime/packages/%{shortname}.xml
 
 # (Fedora) gather the doc files in one location
-   cp -p rtf2html/ChangeLog        ChangeLog.rtf2html
-   cp -p rtf2html/COPYING.LESSER   COPYING.LESSER.rtf2html
-   cp -p rtf2html/README           README.rtf2html
-   cp -p rtf2html/README.mscore    README.mscore.rtf2html
-   cp -p rtf2html/README.ru        README.ru.rtf2html
-   cp -p osdabzip/README           README.osdabzip
-   cp -p osdabzip/README.mscore    README.mscore.osdabzip
-   cp -p share/wallpaper/COPYRIGHT COPYING.wallpaper
+cp -p rtf2html/ChangeLog        ChangeLog.rtf2html
+cp -p rtf2html/COPYING.LESSER   COPYING.LESSER.rtf2html
+cp -p rtf2html/README           README.rtf2html
+cp -p rtf2html/README.mscore    README.mscore.rtf2html
+cp -p rtf2html/README.ru        README.ru.rtf2html
+cp -p osdabzip/README           README.osdabzip
+cp -p osdabzip/README.mscore    README.mscore.osdabzip
+cp -p share/wallpaper/COPYRIGHT COPYING.wallpaper
 
-
-%clean
-rm -rf %{buildroot}
+# (tpg) fix bug #812
+ln -s  %{_datadir}/fonts/mscore/mscore-MuseJazz-Medium.ttf %{buildroot}%{_datadir}/fonts/mscore/mscore-MuseJazz.ttf 
 
 %files
-%defattr(-,root,root)
 %doc ChangeLog* NEWS README* COPYING*
 %{_bindir}/%{shortname}
 %{_datadir}/%{shortname}*
@@ -193,18 +190,3 @@ rm -rf %{buildroot}
 
 %files fonts
 %{_datadir}/fonts/%{shortname}
-
-
-%changelog
-* Mon Oct 31 2011 Thomas Spuhler <tspuhler@mandriva.org> 1.1-2mdv2012.0
-+ Revision: 707958
-- added %%patch9 -p2 -b .enable-portaudio-by-default for audio to play out of the box
-
-* Sun Oct 30 2011 Thomas Spuhler <tspuhler@mandriva.org> 1.1-1
-+ Revision: 707861
-- removed BuildRequires:	qtsingleapplication-devel, we use system version
-  added BuildRequires:  texlive-mf2pt1
-  changed Provides:   mscore to musescore
-- imported package musescore
-
-
