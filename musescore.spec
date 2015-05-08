@@ -1,50 +1,35 @@
 %define srcname MuseScore
 %define shortname mscore
+%define fontfamilyname %{shortname}
+%define shortver 2.0
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	1.3
-Release:	3
+Version:	2.0.1
+Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{shortname}-%{version}.tar.bz2
-# (Fedora) For building the jazz font
-Source1:	mscore-ConvertFont.ff
+Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{srcname}-%{version}.zip
 # (Fedora) For mime types
 Source2:	mscore.xml
-Patch0:		mscore-1.0-awl-fix-underlink.patch
-Patch1:		mscore-1.0-disable-uitools.patch
-# (Fedora) use the system default soundfont instead of the deleted, non-free, one 
-Patch2:		mscore-use-default-soundfont.patch
-# (Fedora) don't build the common files (font files, wallpapers, demo song,
-# instrument list) into the binary executable to reduce its size. This is also
-# useful to inform the users about the existence of different choices for common
-# files. The font files need to be separated due to the font packaging guidelines.
-Patch3:		mscore-separate-commonfiles.patch
-# (Fedora) Split the large documentation into a separate package
-Patch4:		mscore-split-doc.patch
-# (Fedora) Fix DSO linking.
-Patch5:		mscore-dso-linking.patch
-# (Fedora) Fix some gcc warnings
-Patch6:		mscore-fix-gcc-warnings.patch
-# (Fedora) Use system qtsingleapplication
-Patch7:		mscore-system-qtsingleapplication.patch
 BuildRequires:	cmake
 BuildRequires:	libalsa-devel
 BuildRequires:	jackit-devel
 BuildRequires:	fluidsynth-devel
 BuildRequires:	portaudio-devel
-BuildRequires:	qt4-devel > 4:4.4
-BuildRequires:	qt4-linguist
+BuildRequires:	qt5-designer
+BuildRequires:	qt5-devel >= 5.3
+BuildRequires:	qt5-linguist
 BuildRequires:	doxygen
 BuildRequires:	texlive-mf2pt1
 BuildRequires:	pkgconfig(QtWebKit)
 Requires:		qtscriptbindings
 Requires:		%{name}-fonts = %{version}-%{release}
+Requires:		fonts-ttf-freefont
 Requires:		soundfont2-default
 Provides:		musescore
 Obsoletes:		mscore
@@ -95,98 +80,116 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%setup -q -n %{shortname}-%{version}/mscore
-%patch0 -p2 -b .underlink
-%patch1 -p0 -b .disable-uitools
+%setup -q -n %{srcname}-%{version}
 
-%patch2 -p2 -b .default-soundfont
-%patch3 -p2 -b .separate-commonfiles
-%patch4 -p2 -b .split-doc
-%patch5 -p2 -b .dso-linking
-%patch6 -p2 -b .gcc-warnings
-%patch7 -p2 -b .qtsingleapp
-
-# only install .qm files
-perl -pi -e 's,.*.ts\n,,g' share/locale/CMakeLists.txt
-
-# (Fedora) Remove the precompiled binary
-rm rtf2html/rtf2html
+# Remove the precompiled binary
+rm thirdparty/rtf2html/rtf2html
 
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
-# (Fedora) Fix EOL encoding
-sed 's|\r||' rtf2html/README > tmpfile
-touch -r rtf2html/README tmpfile
-mv -f tmpfile rtf2html/README
-
-# (Fedora) Remove preshipped fonts. We will build them from source
-rm -f %{shortname}/%{shortname}/fonts/*.ttf
-
 # (Fedora) Disable rpath
 sed -i '/rpath/d' %{shortname}/CMakeLists.txt
 
-# (Fedora) this is non-free soundfont "Gort's Minipiano"
-rm -f mscore/data/piano1.sf2
-
 # (Fedora) Force specific compile flags:
-find . -name CMakeLists.txt -exec sed -i 's|-O3|%{optflags}|' {} \;
+find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
 %build
-%cmake_qt4 -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF
-%make
-make lupdate
-make lrelease
-
-# (Fedora) Build fonts from source:
-pushd ../%{shortname}/fonts
-   # adapt genFont script to mandriva's cmake build dir
-   sed -i 's,../../../build/mscore/genft,../../build/mscore/genft,' genFont
-   ./genFont
-   fontforge %{SOURCE1} MuseJazz.sfd
+%cmake -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE
+%make PREFIX=/usr lrelease
+%make PREFIX=/usr 
+pushd rdoc
+  make PREFIX=/usr
 popd
 
 %install
 %{makeinstall_std} -C build
+%{makeinstall_std} -C build/rdoc
+
+mkdir -p %{buildroot}/%{_datadir}/applications
+cp -a build/%{shortname}.desktop %{buildroot}/%{_datadir}/applications
 
 # Install fonts
-mkdir -p %{buildroot}/%{_datadir}/fonts/%{shortname}
-install -pm 644 %{shortname}/fonts/%{shortname}*.ttf %{buildroot}/%{_datadir}/fonts/%{shortname}
+mkdir -p %{buildroot}/%{_xfontdir}/TTF
+mkdir -p %{buildroot}/%{_xfontdir}/TTF/bravura
+mkdir -p %{buildroot}/%{_xfontdir}/TTF/gootville
+install -pm 644 fonts/*.ttf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/bravura/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/bravura/*.json %{buildroot}/%{_xfontdir}/TTF/bravura
+install -pm 644 fonts/gootville/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/gootville/*.json %{buildroot}/%{_xfontdir}/TTF/gootville
+install -pm 644 fonts/mscore/*.ttf fonts/mscore/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/mscore/*.json %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/*.xml %{buildroot}/%{_xfontdir}/TTF
 
-# Install Manpage
-install -D -pm 644 packaging/%{shortname}.1 %{buildroot}/%{_mandir}/man1/%{shortname}.1
+# these are packaged separately
+rm -f %{buildroot}/%{_xfontdir}/TTF/Free*
 
-# Install mimetype file
-install -D -pm 644 %{SOURCE2} %{buildroot}/%{_datadir}/mime/packages/%{shortname}.xml
+# mscz
+install -p share/templates/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
+# symlinks to be safe
+pushd %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
+for i in *.mcsz; do
+  ln -s $i ../templates/$i
+done
+popd
 
-# (Fedora) gather the doc files in one location
-cp -p rtf2html/ChangeLog        ChangeLog.rtf2html
-cp -p rtf2html/COPYING.LESSER   COPYING.LESSER.rtf2html
-cp -p rtf2html/README           README.rtf2html
-cp -p rtf2html/README.mscore    README.mscore.rtf2html
-cp -p rtf2html/README.ru        README.ru.rtf2html
-cp -p osdabzip/README           README.osdabzip
-cp -p osdabzip/README.mscore    README.mscore.osdabzip
-cp -p share/wallpaper/COPYRIGHT COPYING.wallpaper
+pushd %{buildroot}/%{_xfontdir}/TTF
+cd bravura
+ln -s ../Bravura.otf .
+ln -s ../BravuraText.otf .
+cd ../gootville
+ln -s ../Gootville.otf .
+ln -s ../GootvilleText.otf .
+cd ..
+popd
 
-# (tpg) fix bug #812
-ln -s  %{_datadir}/fonts/mscore/mscore-MuseJazz-Medium.ttf %{buildroot}%{_datadir}/fonts/mscore/mscore-MuseJazz.ttf 
+# Mime type
+mkdir -p %{buildroot}/%{_datadir}/mime/packages
+install -pm 644 %{SOURCE2} %{buildroot}/%{_datadir}/mime/packages/
+
+# Desktop file
+desktop-file-install \
+   --dir=%{buildroot}/%{_datadir}/applications \
+   --add-category="X-Notation" \
+   --remove-category="Sequencer" \
+   --remove-category="AudioVideoEditing" \
+   --remove-key="Version" \
+   --add-mime-type="audio/midi" \
+   --add-mime-type="text/x-lilypond" \
+   --add-mime-type="application/xml" \
+   %{buildroot}/%{_datadir}/applications/%{shortname}.desktop
+
+# Move images to the freedesktop location
+mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/apps/
+mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/mimetypes/
+cp -a mscore/data/mscore.xpm \
+   %{buildroot}/%{_datadir}/icons/hicolor/32x32/mimetypes/application-x-musescore.xpm
+cp -a mscore/data/mscore.xpm \
+   %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps/
+cp -a mscore/data/mscore.png \
+   %{buildroot}/%{_datadir}/icons/hicolor/64x64/mimetypes/application-x-musescore.png
+cp -a mscore/data/mscore.png \
+   %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps/
+
+# Manpage
+mkdir -p %{buildroot}/%{_mandir}/man1
+install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 
 %files
-%doc ChangeLog* NEWS README* COPYING*
+%doc ChangeLog* README* COPYING*
 %{_bindir}/%{shortname}
 %{_datadir}/%{shortname}*
+%{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/applications/%{shortname}.desktop
 %{_datadir}/pixmaps/%{shortname}.*
 %{_datadir}/mime/packages/%{shortname}.xml
-%{_datadir}/soundfonts/TimGM6mb.sf2
 %{_mandir}/man1/*
-%{qt4plugins}/designer/libawlplugin.so
-%exclude %{_datadir}/%{shortname}-*/man/
+%exclude %{_datadir}/%{shortname}-*/manual/
 
 %files doc
 %defattr(-,root,root,-)
-%doc %{_datadir}/%{shortname}-*/man/
+%doc %{_datadir}/%{shortname}-*/manual/
 
 %files fonts
-%{_datadir}/fonts/%{shortname}
+%{_datadir}/fonts/TTF/*
