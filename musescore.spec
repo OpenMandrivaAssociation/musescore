@@ -104,6 +104,8 @@ sed -i '/rpath/d' %{shortname}/CMakeLists.txt
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
 %build
+export CC=gcc
+export CXX=g++
 %cmake -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE
 %make PREFIX=/usr lrelease
 %make PREFIX=/usr 
