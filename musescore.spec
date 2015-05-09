@@ -22,12 +22,14 @@ BuildRequires:	libalsa-devel
 BuildRequires:	jackit-devel
 BuildRequires:	fluidsynth-devel
 BuildRequires:	portaudio-devel
+BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-linguist
-BuildRequires:	qt5-tools
 %if %mdvver >= 201500
 BuildRequires:	qt5-qtquick-qmlviewer
+%else
+BuildRequires:  qt5-tools
 %endif
 BuildRequires:	doxygen
 BuildRequires:	texlive-mf2pt1
