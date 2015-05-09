@@ -17,6 +17,7 @@ Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{ver
 # (Fedora) For mime types
 Source2:	mscore.xml
 Patch1:		MuseScore-2.0.0-remove-mp3-support.patch
+Patch2:		MuseScore-2.0.1-debug.patch
 BuildRequires:	cmake
 BuildRequires:	libalsa-devel
 BuildRequires:	jackit-devel

@@ -1,0 +1,12 @@
+--- MuseScore-2.0.1/mscore/importmidi/importmidi_tuplet.cpp.orig	2015-05-09 11:16:59.777894567 +0100
++++ MuseScore-2.0.1/mscore/importmidi/importmidi_tuplet.cpp	2015-05-09 11:17:13.308895582 +0100
+@@ -1180,7 +1180,9 @@
+                  "Not all tuplets are referenced in chords or notes");
+       Q_ASSERT_X(MChord::areNotesLongEnough(chords),
+                  "MidiTuplet::findAllTuplets", "There are too short notes");
++#ifdef QT_DEBUG
+       Q_ASSERT(areAllTupletsDifferent(tuplets));
++#endif
+       }
+ 
+ } // namespace MidiTuplet
