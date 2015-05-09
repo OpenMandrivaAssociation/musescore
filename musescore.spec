@@ -26,6 +26,7 @@ BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-linguist
+BuildRequires:	qt5-linguist-tools
 %if %mdvver >= 201500
 BuildRequires:	qt5-qtquick-qmlviewer
 %else
