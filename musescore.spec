@@ -185,7 +185,7 @@ mkdir -p %{buildroot}/%{_mandir}/man1
 install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 
 %files
-%doc ChangeLog* README* COPYING*
+%doc README*
 %{_bindir}/%{shortname}
 %{_datadir}/%{shortname}*
 %{_datadir}/icons/hicolor/*/*/*
