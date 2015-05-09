@@ -16,6 +16,7 @@ Group:		Publishing
 Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{srcname}-%{version}.zip
 # (Fedora) For mime types
 Source2:	mscore.xml
+Patch1:		MuseScore-2.0.0-remove-mp3-support.patch
 BuildRequires:	cmake
 BuildRequires:	libalsa-devel
 BuildRequires:	jackit-devel
@@ -85,6 +86,7 @@ This package contains the musical notation fonts for use of MuseScore.
 
 %prep
 %setup -q -n %{srcname}-%{version}
+%apply_patches
 
 # Remove the precompiled binary
 rm thirdparty/rtf2html/rtf2html
