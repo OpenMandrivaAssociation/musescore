@@ -16,8 +16,6 @@ Group:		Publishing
 Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{srcname}-%{version}.zip
 # (Fedora) For mime types
 Source2:	mscore.xml
-Patch1:		MuseScore-2.0.0-remove-mp3-support.patch
-Patch2:		MuseScore-2.0.1-debug.patch
 BuildRequires:	cmake
 BuildRequires:	libalsa-devel
 BuildRequires:	jackit-devel
@@ -105,7 +103,7 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 %build
 export CC=gcc
 export CXX=g++
-%cmake -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE
+%cmake -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_LAME="OFF"
 %make PREFIX=/usr lrelease
 %make PREFIX=/usr 
 pushd rdoc
