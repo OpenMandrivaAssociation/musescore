@@ -6,7 +6,7 @@
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
 Version:	2.0.3
-Release:	0.1
+Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -192,11 +192,12 @@ install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 %files
 %doc README*
 %{_bindir}/%{shortname}
+%{_bindir}/%{name}
 %{_datadir}/%{shortname}*
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/applications/%{shortname}.desktop
-%{_datadir}/pixmaps/%{shortname}.*
 %{_datadir}/mime/packages/%{shortname}.xml
+%{_datadir}/mime/packages/%{name}.xml
 %{_mandir}/man1/*
 %exclude %{_datadir}/%{shortname}-*/manual/
 
