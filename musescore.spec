@@ -22,6 +22,9 @@ BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
+BuildRequires:    pkgconfig(Qt5Svg)
+BuildRequires:	pkgconfig(QtWebKit)
+BuildRequires:    pkgconfig(Qt5WebKitWidgets)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
@@ -32,8 +35,6 @@ BuildRequires:	qt5-qtquick1
 %else
 BuildRequires:  qt5-tools
 %endif
-BuildRequires:	pkgconfig(QtWebKit)
-BuildRequires:    pkgconfig(Qt5WebKitWidgets)
 Requires:		qtscriptbindings
 Requires:		%{name}-fonts = %{version}-%{release}
 Requires:		fonts-ttf-freefont
