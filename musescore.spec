@@ -17,10 +17,11 @@ Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{ver
 # (Fedora) For mime types
 Source2:	mscore.xml
 BuildRequires:	cmake
-BuildRequires:	libalsa-devel
+BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
-BuildRequires:	fluidsynth-devel
+BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
+BuildRequires:	pkgconfig(Qt5XmlPatterns)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
@@ -58,12 +59,12 @@ Features:
       - print or create pdf files
 
 %package doc
-Summary:	MuseScore documentation
-Group:		Development/Other
-License:	CC-BY
-Requires:	%{name} = %{version}-%{release}
-BuildArch:	noarch
-Obsoletes:	mscore-doc
+Summary:    MuseScore documentation
+Group:      Development/Other
+License:    CC-BY
+Requires:   %{name} = %{version}-%{release}
+BuildArch:  noarch
+Obsoletes:  mscore-doc
 
 %description doc
 MuseScore is a free cross platform WYSIWYG music notation program.
