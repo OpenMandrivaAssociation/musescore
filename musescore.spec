@@ -32,6 +32,7 @@ BuildRequires:	qt5-qtquick1
 BuildRequires:  qt5-tools
 %endif
 BuildRequires:	pkgconfig(QtWebKit)
+BuildRequires:    pkgconfig(Qt5WebKitWidgets)
 Requires:		qtscriptbindings
 Requires:		%{name}-fonts = %{version}-%{release}
 Requires:		fonts-ttf-freefont
