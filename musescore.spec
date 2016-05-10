@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig(Qt5XmlPatterns)
 BuildRequires:    pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(QtWebKit)
 BuildRequires:    pkgconfig(Qt5WebKitWidgets)
+BuildRequires:    pkgconfig(Qt5QuickWidgets)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
