@@ -1,11 +1,11 @@
 %define srcname MuseScore
 %define shortname mscore
 %define fontfamilyname %{shortname}
-%define shortver 2.0
+%define shortver 2.1
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	2.0.3
+Version:	2.1
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -13,20 +13,22 @@ Release:	1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	http://downloads.sourceforge.net/project/mscore/mscore/%{srcname}-%{version}/%{srcname}-%{version}.zip
+Source0:	https://ftp.osuosl.org/pub/musescore/releases/MuseScore-%{version}/MuseScore-%{version}.zip
 # (Fedora) For mime types
 Source2:	mscore.xml
+Patch0:		musescore-2.1-compile.patch
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
-BuildRequires:    pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(QtWebKit)
-BuildRequires:    pkgconfig(Qt5WebKitWidgets)
-BuildRequires:    pkgconfig(Qt5QuickWidgets)
-BuildRequires:    pkgconfig(Qt5Help)
+BuildRequires:  pkgconfig(Qt5WebKitWidgets)
+BuildRequires:  pkgconfig(Qt5QuickWidgets)
+BuildRequires:  pkgconfig(Qt5Help)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
@@ -105,19 +107,15 @@ sed -i '/rpath/d' %{shortname}/CMakeLists.txt
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
+%cmake_qt5 -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_LAME=ON -G Ninja
+
 %build
-export CC=gcc
-export CXX=g++
-%cmake -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_LAME="OFF"
-%make PREFIX=/usr lrelease
-%make PREFIX=/usr 
-pushd rdoc
-  make PREFIX=/usr
-popd
+%ninja lrelease -C build
+%ninja -C build
+%ninja referenceDocumentation -C build
 
 %install
-%{makeinstall_std} -C build
-%{makeinstall_std} -C build/rdoc
+%ninja_install -C build
 
 mkdir -p %{buildroot}/%{_datadir}/applications
 cp -a build/%{shortname}.desktop %{buildroot}/%{_datadir}/applications
@@ -139,13 +137,8 @@ install -pm 644 fonts/*.xml %{buildroot}/%{_xfontdir}/TTF
 rm -f %{buildroot}/%{_xfontdir}/TTF/Free*
 
 # mscz
-install -p share/templates/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
-# symlinks to be safe
-pushd %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
-for i in *.mcsz; do
-  ln -s $i ../templates/$i
-done
-popd
+mkdir -p %{buildroot}%{_datadir}/%{shortname}-%{shortver}/demos
+install -D -p share/templates/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
 
 pushd %{buildroot}/%{_xfontdir}/TTF
 cd bravura
