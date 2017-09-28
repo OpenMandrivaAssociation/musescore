@@ -23,12 +23,16 @@ BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
+BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(QtWebKit)
 BuildRequires:  pkgconfig(Qt5WebKitWidgets)
 BuildRequires:  pkgconfig(Qt5QuickWidgets)
 BuildRequires:  pkgconfig(Qt5Help)
+BuildRequires:  pkgconfig(Qt5Designer)
+BuildRequires:  pkgconfig(Qt5Test)
+BuildRequires:  pkgconfig(Qt5UiTools)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
