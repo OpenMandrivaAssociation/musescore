@@ -38,12 +38,7 @@ BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-linguist-tools
-%if %mdvver >= 201500
 BuildRequires:	qt5-qtquick1
-%else
-BuildRequires:  qt5-tools
-%endif
-Requires:		qtscriptbindings
 Requires:		%{name}-fonts = %{version}-%{release}
 Requires:		fonts-ttf-freefont
 Requires:		soundfont2-default
