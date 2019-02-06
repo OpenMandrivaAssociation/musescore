@@ -26,7 +26,7 @@ BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
 BuildRequires:    pkgconfig(Qt5Svg)
-BuildRequires:	pkgconfig(QtWebKit)
+BuildRequires:	pkgconfig(Qt5WebKit)
 BuildRequires:    pkgconfig(Qt5WebKitWidgets)
 BuildRequires:    pkgconfig(Qt5QuickWidgets)
 BuildRequires:    pkgconfig(Qt5Help)
