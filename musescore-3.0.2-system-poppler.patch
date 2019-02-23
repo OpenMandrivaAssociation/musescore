@@ -1,0 +1,36 @@
+diff -up musescore-3.0.2/CMakeLists.txt.omv~ musescore-3.0.2/CMakeLists.txt
+--- musescore-3.0.2/CMakeLists.txt.omv~	2019-02-23 01:28:13.328030955 +0100
++++ musescore-3.0.2/CMakeLists.txt	2019-02-23 01:46:07.072178344 +0100
+@@ -774,7 +774,7 @@ if (ZERBERUS)
+ endif (ZERBERUS)
+ 
+ if (OMR)
+-      subdirs (omr thirdparty/poppler)
++      subdirs (omr)
+ endif (OMR)
+ 
+ if (OSC)
+@@ -817,8 +817,9 @@ else (USE_SYSTEM_FREETYPE)
+ endif (USE_SYSTEM_FREETYPE)
+ 
+ if (OMR)
+-   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler)
+-   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler/poppler)
++	#   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler)
++	#   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler/poppler)
++	include_directories(/usr/include/poppler)
+ endif (OMR)
+ 
+ ##
+diff -up musescore-3.0.2/mscore/CMakeLists.txt.omv~ musescore-3.0.2/mscore/CMakeLists.txt
+--- musescore-3.0.2/mscore/CMakeLists.txt.omv~	2019-02-23 01:49:57.207477645 +0100
++++ musescore-3.0.2/mscore/CMakeLists.txt	2019-02-23 02:15:59.941870659 +0100
+@@ -503,6 +503,8 @@ target_link_libraries(mscore
+       qzip
+       beatroot
+       kqoauth
++      poppler
++      poppler-qt5
+       )
+ 
+ add_dependencies(mscore workspaces)
