@@ -1,12 +1,12 @@
 %define srcname MuseScore
 %define shortname mscore
 %define fontfamilyname %{shortname}
-%define shortver 2.1
+%define shortver 3.0
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	2.1
-Release:	2
+Version:	3.0.2
+Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -16,9 +16,9 @@ Group:		Publishing
 Source0:	https://ftp.osuosl.org/pub/musescore/releases/MuseScore-%{version}/MuseScore-%{version}.zip
 # (Fedora) For mime types
 Source2:	mscore.xml
-Patch0:		musescore-2.1-compile.patch
+Patch0:		musescore-3.0.2-formatstring.patch
+Patch1:		musescore-3.0.2-system-poppler.patch
 BuildRequires:	cmake
-BuildRequires:	ninja
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
@@ -91,8 +91,7 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%setup -q -n %{srcname}-%{version}
-%apply_patches
+%autosetup -p1 -c %{srcname}-%{version}
 
 # Remove the precompiled binary
 rm thirdparty/rtf2html/rtf2html
@@ -106,15 +105,19 @@ sed -i '/rpath/d' %{shortname}/CMakeLists.txt
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
-%cmake_qt5 -DUSE_GLOBAL_FLUID=ON -DBUILD_SCRIPT_INTERFACE=OFF -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_LAME=ON -G Ninja
+%cmake_qt5 \
+	-DOMR:BOOL=ON \
+	-DOCR:BOOL=ON \
+	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
+	-DBUILD_PORTMIDI:BOOL=OFF
 
 %build
-%ninja lrelease -C build
-%ninja -C build
-%ninja referenceDocumentation -C build
+%make lrelease -C build
+%make -C build
+%make referenceDocumentation -C build
 
 %install
-%ninja_install -C build
+%make_install -C build
 
 mkdir -p %{buildroot}/%{_datadir}/applications
 cp -a build/%{shortname}.desktop %{buildroot}/%{_datadir}/applications
@@ -124,11 +127,11 @@ mkdir -p %{buildroot}/%{_xfontdir}/TTF
 mkdir -p %{buildroot}/%{_xfontdir}/TTF/bravura
 mkdir -p %{buildroot}/%{_xfontdir}/TTF/gootville
 install -pm 644 fonts/*.ttf %{buildroot}/%{_xfontdir}/TTF
-install -pm 644 fonts/bravura/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/bravura/*.?tf %{buildroot}/%{_xfontdir}/TTF
 install -pm 644 fonts/bravura/*.json %{buildroot}/%{_xfontdir}/TTF/bravura
-install -pm 644 fonts/gootville/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/gootville/*.?tf %{buildroot}/%{_xfontdir}/TTF
 install -pm 644 fonts/gootville/*.json %{buildroot}/%{_xfontdir}/TTF/gootville
-install -pm 644 fonts/mscore/*.ttf fonts/mscore/*.otf %{buildroot}/%{_xfontdir}/TTF
+install -pm 644 fonts/mscore/*.?tf %{buildroot}/%{_xfontdir}/TTF
 install -pm 644 fonts/mscore/*.json %{buildroot}/%{_xfontdir}/TTF
 install -pm 644 fonts/*.xml %{buildroot}/%{_xfontdir}/TTF
 
