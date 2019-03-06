@@ -1,7 +1,7 @@
-diff -up musescore-3.0.2/CMakeLists.txt.omv~ musescore-3.0.2/CMakeLists.txt
---- musescore-3.0.2/CMakeLists.txt.omv~	2019-02-23 01:28:13.328030955 +0100
-+++ musescore-3.0.2/CMakeLists.txt	2019-02-23 01:46:07.072178344 +0100
-@@ -774,7 +774,7 @@ if (ZERBERUS)
+diff -up MuseScore-3.0.4/CMakeLists.txt.1~ MuseScore-3.0.4/CMakeLists.txt
+--- MuseScore-3.0.4/CMakeLists.txt.1~	2019-02-28 12:31:10.000000000 +0100
++++ MuseScore-3.0.4/CMakeLists.txt	2019-03-06 19:07:29.016202320 +0100
+@@ -786,7 +786,7 @@ if (ZERBERUS)
  endif (ZERBERUS)
  
  if (OMR)
@@ -10,22 +10,20 @@ diff -up musescore-3.0.2/CMakeLists.txt.omv~ musescore-3.0.2/CMakeLists.txt
  endif (OMR)
  
  if (OSC)
-@@ -817,8 +817,9 @@ else (USE_SYSTEM_FREETYPE)
+@@ -829,8 +829,7 @@ else (USE_SYSTEM_FREETYPE)
  endif (USE_SYSTEM_FREETYPE)
  
  if (OMR)
 -   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler)
 -   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler/poppler)
-+	#   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler)
-+	#   include_directories(${PROJECT_SOURCE_DIR}/thirdparty/poppler/poppler)
-+	include_directories(/usr/include/poppler)
++   include_directories(/usr/include/poppler)
  endif (OMR)
  
- ##
-diff -up musescore-3.0.2/mscore/CMakeLists.txt.omv~ musescore-3.0.2/mscore/CMakeLists.txt
---- musescore-3.0.2/mscore/CMakeLists.txt.omv~	2019-02-23 01:49:57.207477645 +0100
-+++ musescore-3.0.2/mscore/CMakeLists.txt	2019-02-23 02:15:59.941870659 +0100
-@@ -503,6 +503,8 @@ target_link_libraries(mscore
+ add_subdirectory(mscore)
+diff -up MuseScore-3.0.4/mscore/CMakeLists.txt.1~ MuseScore-3.0.4/mscore/CMakeLists.txt
+--- MuseScore-3.0.4/mscore/CMakeLists.txt.1~	2019-03-06 19:06:20.513464039 +0100
++++ MuseScore-3.0.4/mscore/CMakeLists.txt	2019-03-06 19:07:48.926416917 +0100
+@@ -501,6 +501,8 @@ target_link_libraries(mscore
        qzip
        beatroot
        kqoauth
@@ -33,4 +31,4 @@ diff -up musescore-3.0.2/mscore/CMakeLists.txt.omv~ musescore-3.0.2/mscore/CMake
 +      poppler-qt5
        )
  
- add_dependencies(mscore workspaces)
+ if (BUILD_CRASH_REPORTER)

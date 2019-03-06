@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.0.2
+Version:	3.0.4
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -13,18 +13,19 @@ Release:	1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	https://ftp.osuosl.org/pub/musescore/releases/MuseScore-%{version}/MuseScore-%{version}.zip
-# (Fedora) For mime types
+Source0:	MuseScore-3.0.4.zip
+# For mime types
 Source2:	mscore.xml
-Patch0:		musescore-3.0.2-formatstring.patch
 Patch1:		musescore-3.0.2-system-poppler.patch
 Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
+Patch3:		musescore-3.0.4-ucontext-compile.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
+BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
 BuildRequires:    pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(Qt5WebEngine)
@@ -94,7 +95,7 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%autosetup -p1 -c %{srcname}-%{version}
+%autosetup -p1 -c MuseScore-%{version}
 
 # Remove the precompiled binary
 rm thirdparty/rtf2html/rtf2html
@@ -112,7 +113,8 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
 	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
-	-DBUILD_PORTMIDI:BOOL=OFF
+	-DBUILD_PORTMIDI:BOOL=OFF \
+	-DDOWNLOAD_SOUNDFONT:BOOL=OFF
 
 %build
 %make lrelease -C build
@@ -191,6 +193,7 @@ install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 %doc README*
 %{_bindir}/%{shortname}
 %{_bindir}/%{name}
+%{_bindir}/mscore-crash-reporter
 %{_datadir}/%{shortname}*
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/applications/%{shortname}.desktop
