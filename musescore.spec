@@ -27,27 +27,30 @@ BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(Qt5XmlPatterns)
-BuildRequires:    pkgconfig(Qt5Svg)
+BuildRequires:	pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(Qt5WebEngine)
-BuildRequires:    pkgconfig(Qt5WebEngineCore)
-BuildRequires:    pkgconfig(Qt5WebEngineWidgets)
-BuildRequires:    pkgconfig(Qt5QuickWidgets)
-BuildRequires:    pkgconfig(Qt5Help)
-BuildRequires:    pkgconfig(Qt5Designer)
-BuildRequires:    pkgconfig(Qt5Test)
-BuildRequires:    pkgconfig(Qt5UiTools)
+BuildRequires:	pkgconfig(Qt5WebEngineCore)
+BuildRequires:	pkgconfig(Qt5WebEngineWidgets)
+BuildRequires:	pkgconfig(Qt5QuickWidgets)
+BuildRequires:	pkgconfig(Qt5Help)
+BuildRequires:	pkgconfig(Qt5Designer)
+BuildRequires:	pkgconfig(Qt5Test)
+BuildRequires:	pkgconfig(Qt5UiTools)
 BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(sndfile)
+BuildRequires:	pkgconfig(poppler)
+BuildRequires:	pkgconfig(poppler-qt5)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-linguist-tools
 BuildRequires:	qt5-qtquick1
-Requires:		%{name}-fonts = %{version}-%{release}
-Requires:		fonts-ttf-freefont
-Requires:		soundfont2-default
-Provides:		musescore
-Obsoletes:		mscore
+Requires:	%{name}-fonts = %{version}-%{release}
+Requires:	fonts-ttf-freefont
+Requires:	soundfont2-default
+Provides:	musescore
+Obsoletes:	mscore
 
 %description
 MuseScore stands for Linux MusE Score Typesetter.
