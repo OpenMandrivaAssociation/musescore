@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.0.4
+Version:	3.0.5
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -13,12 +13,11 @@ Release:	1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	MuseScore-3.0.4.zip
+Source0:	https://github.com/musescore/MuseScore/archive/v3.0.5.tar.gz
 # For mime types
 Source2:	mscore.xml
 Patch1:		musescore-3.0.2-system-poppler.patch
 Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
-Patch3:		musescore-3.0.4-ucontext-compile.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
@@ -40,6 +39,7 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(poppler)
 BuildRequires:	pkgconfig(poppler-qt5)
+BuildRequires:	pkgconfig(vorbisfile)
 BuildRequires:	qt5-assistant
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
@@ -98,7 +98,7 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%autosetup -p1 -c MuseScore-%{version}
+%autosetup -p1 -n MuseScore-%{version}
 
 # Remove the precompiled binary
 rm thirdparty/rtf2html/rtf2html
@@ -196,7 +196,6 @@ install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 %doc README*
 %{_bindir}/%{shortname}
 %{_bindir}/%{name}
-%{_bindir}/mscore-crash-reporter
 %{_datadir}/%{shortname}*
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/applications/%{shortname}.desktop
