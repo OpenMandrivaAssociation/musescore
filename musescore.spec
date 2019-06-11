@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.0.5
+Version:	3.1
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -13,10 +13,9 @@ Release:	1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	https://github.com/musescore/MuseScore/archive/v3.0.5.tar.gz
+Source0:	https://github.com/musescore/MuseScore/archive/v%{version}.tar.gz
 # For mime types
 Source2:	mscore.xml
-Patch1:		musescore-3.0.2-system-poppler.patch
 Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
@@ -116,6 +115,7 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
 	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
+	-DUSE_SYSTEM_POPPLER:BOOL=ON \
 	-DBUILD_PORTMIDI:BOOL=OFF \
 	-DDOWNLOAD_SOUNDFONT:BOOL=OFF
 
@@ -202,7 +202,7 @@ install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 %{_datadir}/mime/packages/%{shortname}.xml
 %{_datadir}/mime/packages/%{name}.xml
 %{_mandir}/man1/*
-%{_datadir}/appdata/mscore.appdata.xml
+%{_datadir}/metainfo/org.musescore.MuseScore.appdata.xml
 
 %exclude %{_datadir}/%{shortname}-*/manual/
 
