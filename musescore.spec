@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.1
+Version:	3.2.3
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -179,14 +179,6 @@ desktop-file-install \
 # Move images to the freedesktop location
 mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/apps/
 mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/mimetypes/
-cp -a mscore/data/mscore.xpm \
-   %{buildroot}/%{_datadir}/icons/hicolor/32x32/mimetypes/application-x-musescore.xpm
-cp -a mscore/data/mscore.xpm \
-   %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps/
-cp -a mscore/data/mscore.png \
-   %{buildroot}/%{_datadir}/icons/hicolor/64x64/mimetypes/application-x-musescore.png
-cp -a mscore/data/mscore.png \
-   %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps/
 
 # Manpage
 mkdir -p %{buildroot}/%{_mandir}/man1
