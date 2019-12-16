@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.2.3
+Version:	3.2.4
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -30,6 +30,7 @@ BuildRequires:	pkgconfig(Qt5WebEngine)
 BuildRequires:	pkgconfig(Qt5WebEngineCore)
 BuildRequires:	pkgconfig(Qt5WebEngineWidgets)
 BuildRequires:	pkgconfig(Qt5QuickWidgets)
+BuildRequires:  pkgconfig(Qt5QuickControls2)
 BuildRequires:	pkgconfig(Qt5Help)
 BuildRequires:	pkgconfig(Qt5Designer)
 BuildRequires:	pkgconfig(Qt5Test)
@@ -48,6 +49,7 @@ BuildRequires:	qt5-qtquick1
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
+Requires:       qt5-qtquickcontrols2
 Provides:	musescore
 Obsoletes:	mscore
 
