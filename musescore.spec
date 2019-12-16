@@ -101,9 +101,6 @@ This package contains the musical notation fonts for use of MuseScore.
 %prep
 %autosetup -p1 -n MuseScore-%{version}
 
-# Remove the precompiled binary
-rm thirdparty/rtf2html/rtf2html
-
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
