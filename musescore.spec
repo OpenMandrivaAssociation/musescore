@@ -16,7 +16,7 @@ Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}.tar.gz
 # For mime types
 Source2:	https://github.com/musescore/MuseScore/raw/master/build/mscore.xml
-Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
+#Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
