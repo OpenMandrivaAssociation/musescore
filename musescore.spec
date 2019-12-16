@@ -5,7 +5,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.2.4
+Version:	3.3.4
 Release:	1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
