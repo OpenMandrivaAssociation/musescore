@@ -1,0 +1,12 @@
+diff -up MuseScore-3.5beta/mscore/scoreview.cpp.omv~ MuseScore-3.5beta/mscore/scoreview.cpp
+--- MuseScore-3.5beta/mscore/scoreview.cpp.omv~	2020-06-12 00:10:31.413590278 +0200
++++ MuseScore-3.5beta/mscore/scoreview.cpp	2020-06-12 00:10:42.859711230 +0200
+@@ -2593,7 +2593,7 @@ void ScoreView::cmd(const char* s)
+                   cv->updateGrips();
+                   }},
+       #ifdef OMR
+-            {{"show-omr"}, [](ScoreView* cv, const QByteArray&) {
++            {{"show-omr"}, [this](ScoreView* cv, const QByteArray&) {
+                   if (cv->score()->masterScore()->omr())
+                         showOmr(!_score->masterScore()->showOmr());
+                   }},

@@ -3,19 +3,22 @@
 %define fontfamilyname %{shortname}
 %define shortver 3.0
 
+%define beta beta
+
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.2.3
-Release:	1
+Version:	3.5
+Release:	%{?beta:0.%{beta}.}1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
-Source0:	https://github.com/musescore/MuseScore/archive/v%{version}.tar.gz
+Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 # For mime types
 Source2:	https://github.com/musescore/MuseScore/raw/master/build/mscore.xml
+Patch0:		MuseScore-3.5beta-compile.patch
 Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
@@ -97,10 +100,7 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%autosetup -p1 -n MuseScore-%{version}
-
-# Remove the precompiled binary
-rm thirdparty/rtf2html/rtf2html
+%autosetup -p1 -n MuseScore-%{version}%{?beta:%{beta}}
 
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
@@ -196,11 +196,8 @@ install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
 %{_mandir}/man1/*
 %{_datadir}/metainfo/org.musescore.MuseScore.appdata.xml
 
-%exclude %{_datadir}/%{shortname}-*/manual/
-
 %files doc
 %defattr(-,root,root,-)
-%doc %{_datadir}/%{shortname}-*/manual/
 
 %files fonts
 %{_datadir}/fonts/TTF/*
