@@ -7,7 +7,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.5.2
+Version:	3.6.1
 Release:	%{?beta:0.%{beta}.}1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -18,8 +18,6 @@ Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 # For mime types
 Source2:	https://github.com/musescore/MuseScore/raw/master/build/mscore.xml
-Patch0:		MuseScore-3.5beta-compile.patch
-Patch1:		MuseScore-3.5.2-compile.patch
 Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
