@@ -1,13 +1,16 @@
+# https://bugreports.qt.io/browse/QTBUG-73834
+%define _disable_lto 1
+
 %define srcname MuseScore
 %define shortname mscore
 %define fontfamilyname %{shortname}
-%define shortver 3.0
+%define shortver 4.0
 
 #define beta beta
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	3.6.2
+Version:	4.0
 Release:	%{?beta:0.%{beta}.}1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -16,10 +19,6 @@ License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
-# For mime types
-Source2:	https://github.com/musescore/MuseScore/raw/master/build/mscore.xml
-Patch1:		musescore-3.6.2-compile.patch
-Patch2:		musescore-3.0.2-dont-copy-qtwebengine.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
@@ -105,30 +104,31 @@ This package contains the musical notation fonts for use of MuseScore.
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
-# (Fedora) Disable rpath
-sed -i '/rpath/d' %{shortname}/CMakeLists.txt
-
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
+# FIXME
+# clang 15: build failure because clang interprets an overloaded
+# delete operator differently
+# For now, force gcc
+export CC=gcc
+export CXX=g++
 %cmake_qt5 \
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
 	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
 	-DUSE_SYSTEM_POPPLER:BOOL=ON \
 	-DBUILD_PORTMIDI:BOOL=OFF \
+	-DBUILD_CRASHPAD_CLIENT:BOOL=OFF \
+	-DTRY_USE_CCACHE:BOOL=OFF \
 	-DDOWNLOAD_SOUNDFONT:BOOL=OFF
 
 %build
 %make lrelease -C build
 %make -C build
-%make referenceDocumentation -C build
 
 %install
 %make_install -C build
-
-mkdir -p %{buildroot}/%{_datadir}/applications
-cp -a build/%{shortname}.desktop %{buildroot}/%{_datadir}/applications
 
 # Install fonts
 mkdir -p %{buildroot}/%{_xfontdir}/TTF
@@ -150,6 +150,22 @@ rm -f %{buildroot}/%{_xfontdir}/TTF/Free*
 mkdir -p %{buildroot}%{_datadir}/%{shortname}-%{shortver}/demos
 install -D -p share/templates/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
 
+# No point in packaging dupes
+cd %{buildroot}
+rm -rf \
+	.%{_bindir}/crashpad_handler \
+	.%{_includedir}/gmock \
+	.%{_includedir}/gtest \
+	.%{_includedir}/opus \
+	.%{_libdir}/cmake/GTest \
+	.%{_libdir}/*.a \
+	.%{_libdir}/pkgconfig
+
+# ... or headers for internal libraries
+rm -rf \
+	.%{_includedir}/kddockwidgets \
+	.%{_libdir}/cmake/KDDockWidgets
+
 pushd %{buildroot}/%{_xfontdir}/TTF
 cd bravura
 ln -s ../Bravura.otf .
@@ -160,40 +176,14 @@ ln -s ../GootvilleText.otf .
 cd ..
 popd
 
-# Mime type
-mkdir -p %{buildroot}/%{_datadir}/mime/packages
-install -pm 644 %{SOURCE2} %{buildroot}/%{_datadir}/mime/packages/
-
-# Desktop file
-desktop-file-install \
-   --dir=%{buildroot}/%{_datadir}/applications \
-   --add-category="X-Notation" \
-   --remove-category="Sequencer" \
-   --remove-category="AudioVideoEditing" \
-   --remove-key="Version" \
-   --add-mime-type="audio/midi" \
-   --add-mime-type="text/x-lilypond" \
-   --add-mime-type="application/xml" \
-   %{buildroot}/%{_datadir}/applications/%{shortname}.desktop
-
-# Move images to the freedesktop location
-mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/apps/
-mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/{32x32,64x64}/mimetypes/
-
-# Manpage
-mkdir -p %{buildroot}/%{_mandir}/man1
-install -pm 644 build/%{shortname}.1 %{buildroot}/%{_mandir}/man1/
-
 %files
 %doc README*
 %{_bindir}/%{shortname}
-%{_bindir}/%{name}
 %{_datadir}/%{shortname}*
 %{_datadir}/icons/hicolor/*/*/*
-%{_datadir}/applications/%{shortname}.desktop
-%{_datadir}/mime/packages/%{shortname}.xml
-%{_datadir}/mime/packages/%{name}.xml
-%{_mandir}/man1/*
+%{_datadir}/applications/*.desktop
+%{_datadir}/mime/packages/*.xml
+%{_mandir}/man1/*.1*
 %{_datadir}/metainfo/org.musescore.MuseScore.appdata.xml
 
 %files doc
