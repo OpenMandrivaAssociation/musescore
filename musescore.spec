@@ -50,7 +50,6 @@ BuildRequires:	qt5-designer
 BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-linguist-tools
-BuildRequires:	qt5-qtquick1
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
