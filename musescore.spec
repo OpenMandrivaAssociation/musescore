@@ -4,13 +4,13 @@
 %define srcname MuseScore
 %define shortname mscore
 %define fontfamilyname %{shortname}
-%define shortver 4.0
+%define shortver %(echo %{version}|cut -d. -f1-2)
 
 #define beta beta
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.0.2
+Version:	4.1.1
 Release:	%{?beta:0.%{beta}.}1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -152,7 +152,7 @@ rm -f %{buildroot}/%{_xfontdir}/TTF/Free*
 
 # mscz
 mkdir -p %{buildroot}%{_datadir}/%{shortname}-%{shortver}/demos
-install -D -p share/templates/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
+install -D -p demos/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
 
 # No point in packaging dupes
 cd %{buildroot}
