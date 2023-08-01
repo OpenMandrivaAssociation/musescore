@@ -19,6 +19,7 @@ License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
+Patch:		musescore-4.1.1-clang.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
@@ -110,12 +111,6 @@ sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
-# FIXME
-# clang 15: build failure because clang interprets an overloaded
-# delete operator differently
-# For now, force gcc
-export CC=gcc
-export CXX=g++
 %cmake_qt5 \
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \

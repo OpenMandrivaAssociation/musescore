@@ -1,0 +1,12 @@
+diff -up MuseScore-4.1.1/thirdparty/google_crashpad_client/compat/linux/sys/mman_memfd_create.cc.omv~ MuseScore-4.1.1/thirdparty/google_crashpad_client/compat/linux/sys/mman_memfd_create.cc
+--- MuseScore-4.1.1/thirdparty/google_crashpad_client/compat/linux/sys/mman_memfd_create.cc.omv~	2023-08-01 00:48:13.170852948 +0100
++++ MuseScore-4.1.1/thirdparty/google_crashpad_client/compat/linux/sys/mman_memfd_create.cc	2023-08-01 00:48:18.600867583 +0100
+@@ -24,7 +24,7 @@
+ 
+ extern "C" {
+ 
+-int memfd_create(const char* name, unsigned int flags) {
++int memfd_create(const char* name, unsigned int flags) throw() {
+   static const crashpad::NoCfiIcall<decltype(memfd_create)*> next_memfd_create(
+       dlsym(RTLD_NEXT, "memfd_create"));
+   return next_memfd_create ? next_memfd_create(name, flags)
