@@ -10,7 +10,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.2.0
+Version:	4.2.1
 Release:	%{?beta:0.%{beta}.}1
 # (Fedora) rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -118,7 +118,9 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DBUILD_PORTMIDI:BOOL=OFF \
 	-DBUILD_CRASHPAD_CLIENT:BOOL=OFF \
 	-DTRY_USE_CCACHE:BOOL=OFF \
-	-DDOWNLOAD_SOUNDFONT:BOOL=OFF
+	-DDOWNLOAD_SOUNDFONT:BOOL=OFF \
+	-DMUE_BUILD_UPDATE_MODULE:BOOL=OFF \
+	-DMUE_BUILD_VIDEOEXPORT_MODULE:BOOL=ON
 
 %build
 %make lrelease -C build
