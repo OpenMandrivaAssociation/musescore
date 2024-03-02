@@ -1,0 +1,16 @@
+diff -up MuseScore-4.2.1/src/app/app.cpp.omv~ MuseScore-4.2.1/src/app/app.cpp
+--- MuseScore-4.2.1/src/app/app.cpp.omv~	2024-03-02 14:46:35.442502486 +0100
++++ MuseScore-4.2.1/src/app/app.cpp	2024-03-02 14:46:41.878574824 +0100
+@@ -64,12 +64,6 @@ int App::run(int argc, char** argv)
+     qputenv("QT_STYLE_OVERRIDE", "Fusion");
+     qputenv("QML_DISABLE_DISK_CACHE", "true");
+ 
+-#ifdef Q_OS_LINUX
+-    if (qEnvironmentVariable("QT_QPA_PLATFORM") != "offscreen") {
+-        qputenv("QT_QPA_PLATFORMTHEME", "gtk3");
+-    }
+-#endif
+-
+     const char* appName;
+     if (framework::MUVersion::unstable()) {
+         appName  = "MuseScore4Development";

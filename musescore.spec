@@ -11,14 +11,15 @@
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
 Version:	4.2.1
-Release:	%{?beta:0.%{beta}.}1
-# (Fedora) rtf2html is LGPLv2+
+Release:	%{?beta:0.%{beta}.}2
+# rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		http://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
+Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
