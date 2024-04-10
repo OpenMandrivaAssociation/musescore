@@ -56,6 +56,7 @@ BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
 BuildRequires:	qt5-assistant
+BuildRequires:	qt5-devel >= 5.3
 BuildRequires:	qt5-designer
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-linguist-tools
