@@ -10,8 +10,8 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.2.1
-Release:	%{?beta:0.%{beta}.}4
+Version:	4.3.2
+Release:	%{?beta:0.%{beta}.}1
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -21,6 +21,10 @@ Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 Patch1:		musescore-4.2.1-ffmpeg7.patch
+# FIXME this shouldn't be a strict requirement, but musescore
+# crashes when opening a file dialog (open/save) if the qt5
+# version of plasma-integration is missing
+Requires:	plasma-integration
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
