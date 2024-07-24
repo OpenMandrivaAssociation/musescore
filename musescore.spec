@@ -69,6 +69,8 @@ Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
 Provides:	musescore
 Obsoletes:	mscore
+Requires:	qt5-qtquickcontrols
+Requires:	qt5-qtquickcontrols2
 
 %description
 MuseScore stands for Linux MusE Score Typesetter.
