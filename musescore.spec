@@ -16,7 +16,7 @@ Release:	%{?beta:0.%{beta}.}2
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
 License:	GPLv2 and LGPLv2+ and LGPLv3
-Url:		http://musescore.org
+Url:		https://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
