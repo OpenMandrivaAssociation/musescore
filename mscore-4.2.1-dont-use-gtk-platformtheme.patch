@@ -1,7 +1,7 @@
-diff -up MuseScore-4.2.1/src/app/app.cpp.omv~ MuseScore-4.2.1/src/app/app.cpp
---- MuseScore-4.2.1/src/app/app.cpp.omv~	2024-03-02 14:46:35.442502486 +0100
-+++ MuseScore-4.2.1/src/app/app.cpp	2024-03-02 14:46:41.878574824 +0100
-@@ -64,12 +64,6 @@ int App::run(int argc, char** argv)
+diff -up MuseScore-4.4.3/src/app/main.cpp.1~ MuseScore-4.4.3/src/app/main.cpp
+--- MuseScore-4.4.3/src/app/main.cpp.1~	2024-11-01 01:51:11.135043799 +0100
++++ MuseScore-4.4.3/src/app/main.cpp	2024-11-01 01:51:53.755582399 +0100
+@@ -93,12 +93,6 @@ int main(int argc, char** argv)
      qputenv("QT_STYLE_OVERRIDE", "Fusion");
      qputenv("QML_DISABLE_DISK_CACHE", "true");
  
@@ -11,6 +11,6 @@ diff -up MuseScore-4.2.1/src/app/app.cpp.omv~ MuseScore-4.2.1/src/app/app.cpp
 -    }
 -#endif
 -
-     const char* appName;
-     if (framework::MUVersion::unstable()) {
-         appName  = "MuseScore4Development";
+ #ifdef Q_OS_WIN
+     // NOTE: There are some problems with rendering the application window on some integrated graphics processors
+     //       see https://github.com/musescore/MuseScore/issues/8270

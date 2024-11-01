@@ -10,8 +10,8 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.3.2
-Release:	%{?beta:0.%{beta}.}2
+Version:	4.4.3
+Release:	%{?beta:0.%{beta}.}1
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -20,7 +20,7 @@ Url:		https://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
-Patch1:		musescore-4.2.1-ffmpeg7.patch
+#Patch1:		musescore-4.2.1-ffmpeg7.patch
 # FIXME this shouldn't be a strict requirement, but musescore
 # crashes when opening a file dialog (open/save) if the qt5
 # version of plasma-integration is missing
@@ -32,24 +32,21 @@ BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(libpulse)
-BuildRequires:	pkgconfig(Qt5XmlPatterns)
-BuildRequires:	pkgconfig(Qt5Svg)
-BuildRequires:	pkgconfig(Qt5WebEngine)
-BuildRequires:	pkgconfig(Qt5WebEngineCore)
-BuildRequires:	pkgconfig(Qt5WebEngineWidgets)
-BuildRequires:	pkgconfig(Qt5QuickWidgets)
-BuildRequires:	pkgconfig(Qt5QuickControls2)
-BuildRequires:	pkgconfig(Qt5QuickTemplates2)
-BuildRequires:	pkgconfig(Qt5Help)
-BuildRequires:	pkgconfig(Qt5Designer)
-BuildRequires:	pkgconfig(Qt5Test)
-BuildRequires:	pkgconfig(Qt5UiTools)
-BuildRequires:	pkgconfig(Qt5X11Extras)
-BuildRequires:	pkgconfig(Qt5NetworkAuth)
+BuildRequires:	pkgconfig(Qt6Svg)
+BuildRequires:	pkgconfig(Qt6WebEngineCore)
+BuildRequires:	pkgconfig(Qt6WebEngineWidgets)
+BuildRequires:	pkgconfig(Qt6QuickWidgets)
+BuildRequires:	pkgconfig(Qt6QuickControls2)
+BuildRequires:	pkgconfig(Qt6QuickTemplates2)
+BuildRequires:	pkgconfig(Qt6Help)
+BuildRequires:	pkgconfig(Qt6Designer)
+BuildRequires:	pkgconfig(Qt6Test)
+BuildRequires:	pkgconfig(Qt6UiTools)
+BuildRequires:	pkgconfig(Qt6NetworkAuth)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(poppler)
-BuildRequires:	pkgconfig(poppler-qt5)
+BuildRequires:	pkgconfig(poppler-qt6)
 BuildRequires:	pkgconfig(vorbisfile)
 BuildRequires:	pkgconfig(libavcodec)
 BuildRequires:	pkgconfig(libavformat)
@@ -59,18 +56,11 @@ BuildRequires:	pkgconfig(libavfilter)
 BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
-BuildRequires:	qt5-assistant
-BuildRequires:	qt5-devel >= 5.3
-BuildRequires:	qt5-designer
-BuildRequires:	qt5-linguist
-BuildRequires:	qt5-linguist-tools
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
 Provides:	musescore
 Obsoletes:	mscore
-Requires:	qt5-qtquickcontrols
-Requires:	qt5-qtquickcontrols2
 
 %description
 MuseScore stands for Linux MusE Score Typesetter.
@@ -126,7 +116,7 @@ sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
-%cmake_qt5 \
+%cmake \
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
 	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
@@ -139,8 +129,7 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DMUE_BUILD_VIDEOEXPORT_MODULE:BOOL=ON
 
 %build
-%make lrelease -C build
-%make -C build
+%make_build -C build
 
 %install
 %make_install -C build
@@ -166,20 +155,19 @@ mkdir -p %{buildroot}%{_datadir}/%{shortname}-%{shortver}/demos
 install -D -p demos/*.mscz %{buildroot}/%{_datadir}/%{shortname}-%{shortver}/demos/
 
 # No point in packaging dupes
+# or headers for internal libraries
 cd %{buildroot}
 rm -rf \
 	.%{_bindir}/crashpad_handler \
 	.%{_includedir}/gmock \
 	.%{_includedir}/gtest \
 	.%{_includedir}/opus \
+	.%{_includedir}/kddockwidgets-qt6 \
 	.%{_libdir}/cmake/GTest \
+	.%{_libdir}/cmake/KDDockWidgets-qt6 \
+	.%{_libdir}/cmake/Opus \
 	.%{_libdir}/*.a \
 	.%{_libdir}/pkgconfig
-
-# ... or headers for internal libraries
-rm -rf \
-	.%{_includedir}/kddockwidgets \
-	.%{_libdir}/cmake/KDDockWidgets
 
 pushd %{buildroot}/%{_xfontdir}/TTF
 cd bravura
