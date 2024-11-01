@@ -56,6 +56,7 @@ BuildRequires:	pkgconfig(libavfilter)
 BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
+BuildRequires:	qmake-qt6
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
