@@ -111,6 +111,8 @@ This package contains the musical notation fonts for use of MuseScore.
 %prep
 %autosetup -p1 -n MuseScore-%{version}%{?beta:%{beta}}
 
+sed -i -e 's,qmake6,qmake-qt6,g' build.cmake buildscripts/cmake/FindQt6.cmake
+
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 
