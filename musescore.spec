@@ -43,6 +43,7 @@ BuildRequires:	pkgconfig(Qt6Designer)
 BuildRequires:	pkgconfig(Qt6Test)
 BuildRequires:	pkgconfig(Qt6UiTools)
 BuildRequires:	pkgconfig(Qt6NetworkAuth)
+BuildRequires:	pkgconfig(Qt6Core5Compat)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(poppler)
@@ -56,6 +57,7 @@ BuildRequires:	pkgconfig(libavfilter)
 BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
+BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	qmake-qt6
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
