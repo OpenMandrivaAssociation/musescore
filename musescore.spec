@@ -57,13 +57,13 @@ BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
 BuildRequires:	pkgconfig(xkbcommon)
+BuildRequires:	pkgconfig(libopusenc)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(harfbuzz)
 BuildRequires:	qmake-qt6
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
-Requires:	opus-tools
 Provides:	musescore
 Obsoletes:	mscore
 
@@ -126,13 +126,12 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 %cmake \
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
-	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
-	-DUSE_SYSTEM_POPPLER:BOOL=ON \
-        -DUSE_SYSTEM_HARFBUZZ:BOOL=ON \
-        -DUSE_SYSTEM_OPUS:BOOL=ON \
-        -DUSE_SYSTEM_OPUSENC:BOOL=ON \
-        -DUSE_SYSTEM_TINYXML:BOOL=ON \
-        -DUSE_SYSTEM_FLAC:BOOL=ON \
+	-DMUE_COMPILE_USE_SYSTEM_FREETYPE:BOOL=ON \
+        -DMUE_COMPILE_USE_SYSTEM_HARFBUZZ:BOOL=ON \
+        -DMUE_COMPILE_USE_SYSTEM_OPUS:BOOL=ON \
+        -DMUE_COMPILE_USE_SYSTEM_OPUSENC:BOOL=ON \
+        -DMUE_COMPILE_USE_SYSTEM_TINYXML:BOOL=ON \
+        -DMUE_COMPILE_USE_SYSTEM_FLAC:BOOL=ON \
 	-DBUILD_PORTMIDI:BOOL=OFF \
 	-DBUILD_CRASHPAD_CLIENT:BOOL=OFF \
 	-DTRY_USE_CCACHE:BOOL=OFF \
