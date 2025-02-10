@@ -41,10 +41,12 @@ BuildRequires:	pkgconfig(Qt6NetworkAuth)
 BuildRequires:	pkgconfig(Qt6Core5Compat)
 BuildRequires:	pkgconfig(Qt6StateMachine)
 BuildRequires:	pkgconfig(Qt6Concurrent)
+BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(poppler)
 BuildRequires:	pkgconfig(poppler-qt6)
+BuildRequires:	pkgconfig(tinyxml2)
 BuildRequires:	pkgconfig(vorbisfile)
 BuildRequires:	pkgconfig(libavcodec)
 BuildRequires:	pkgconfig(libavformat)
@@ -55,10 +57,13 @@ BuildRequires:	pkgconfig(libswscale)
 BuildRequires:	pkgconfig(libpostproc)
 BuildRequires:	pkgconfig(libswresample)
 BuildRequires:	pkgconfig(xkbcommon)
+BuildRequires:	pkgconfig(opus)
+BuildRequires:	pkgconfig(harfbuzz)
 BuildRequires:	qmake-qt6
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
+Requires:	opus-tools
 Provides:	musescore
 Obsoletes:	mscore
 
@@ -123,6 +128,11 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DOCR:BOOL=ON \
 	-DUSE_SYSTEM_FREETYPE:BOOL=ON \
 	-DUSE_SYSTEM_POPPLER:BOOL=ON \
+        -DUSE_SYSTEM_HARFBUZZ:BOOL=ON \
+        -DUSE_SYSTEM_OPUS:BOOL=ON \
+        -DUSE_SYSTEM_OPUSENC:BOOL=ON \
+        -DUSE_SYSTEM_TINYXML:BOOL=ON \
+        -DUSE_SYSTEM_FLAC:BOOL=ON \
 	-DBUILD_PORTMIDI:BOOL=OFF \
 	-DBUILD_CRASHPAD_CLIENT:BOOL=OFF \
 	-DTRY_USE_CCACHE:BOOL=OFF \
