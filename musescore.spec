@@ -11,7 +11,7 @@
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
 Version:	4.4.4
-Release:	%{?beta:0.%{beta}.}1
+Release:	%{?beta:0.%{beta}.}2
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
