@@ -10,8 +10,8 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.4.4
-Release:	%{?beta:0.%{beta}.}2
+Version:	4.5.1
+Release:	%{?beta:0.%{beta}.}1
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -20,6 +20,7 @@ Url:		https://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
+Patch1:		mscore-4.5.1-qt-6.9.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
@@ -115,7 +116,7 @@ This package contains the musical notation fonts for use of MuseScore.
 %prep
 %autosetup -p1 -n MuseScore-%{version}%{?beta:%{beta}}
 
-sed -i -e 's,qmake6,qmake-qt6,g' build.cmake buildscripts/cmake/FindQt6.cmake
+sed -i -e 's,qmake6,qmake-qt6,g' build.cmake buildscripts/cmake/SetupQt6.cmake
 
 # (Fedora) Do not build the bundled qt scripting interface:
 sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
