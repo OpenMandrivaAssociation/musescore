@@ -11,7 +11,7 @@
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
 Version:	4.5.2
-Release:	%{?beta:0.%{beta}.}1
+Release:	%{?beta:0.%{beta}.}2
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -138,7 +138,8 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DTRY_USE_CCACHE:BOOL=OFF \
 	-DDOWNLOAD_SOUNDFONT:BOOL=OFF \
 	-DMUE_BUILD_UPDATE_MODULE:BOOL=OFF \
-	-DMUE_BUILD_VIDEOEXPORT_MODULE:BOOL=ON
+	-DMUE_BUILD_VIDEOEXPORT_MODULE:BOOL=ON \
+ 	-DCMAKE_BUILD_TYPE=Release
 
 %build
 %make_build -C build
