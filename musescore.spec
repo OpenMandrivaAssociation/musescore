@@ -18,7 +18,7 @@ Release:	%{?beta:0.%{beta}.}1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		https://musescore.org
 Group:		Publishing
-Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
+Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}/%{srcname}-%{version}%{?beta:%{beta}.tar.gz
 #Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 #Patch1:		mscore-4.5.1-qt-6.9.patch
 BuildRequires:	cmake
