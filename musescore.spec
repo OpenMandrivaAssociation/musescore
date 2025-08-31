@@ -28,6 +28,7 @@ BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	pkgconfig(Qt6Gui)
 BuildRequires:	pkgconfig(Qt6Svg)
 BuildRequires:	pkgconfig(Qt6WebEngineCore)
 BuildRequires:	pkgconfig(Qt6WebEngineWidgets)
