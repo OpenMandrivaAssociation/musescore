@@ -29,6 +29,7 @@ BuildRequires:	portaudio-devel
 BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(Qt6Gui)
+BuildRequires:	cmake(Qt6GuiPrivate)
 BuildRequires:	pkgconfig(Qt6Svg)
 BuildRequires:	pkgconfig(Qt6WebEngineCore)
 BuildRequires:	pkgconfig(Qt6WebEngineWidgets)
