@@ -6,7 +6,7 @@
 %define fontfamilyname %{shortname}
 %define shortver %(echo %{version}|cut -d. -f1-2)
 
-%define beta alpha
+#define beta alpha
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
@@ -18,7 +18,7 @@ Release:	%{?beta:0.%{beta}.}1
 License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		https://musescore.org
 Group:		Publishing
-Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}/%{srcname}-%{version}%{?beta:%{beta}.tar.gz
+Source0:	https://github.com/musescore/MuseScore/archive/v%{version}-alpha/%{srcname}-%{version}-alpha.tar.gz
 #Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 #Patch1:		mscore-4.5.1-qt-6.9.patch
 BuildRequires:	cmake
@@ -114,7 +114,7 @@ MuseScore is a free cross platform WYSIWYG music notation program.
 This package contains the musical notation fonts for use of MuseScore.
 
 %prep
-%autosetup -p1 -n MuseScore-%{version}%{?beta:%{beta}}
+%autosetup -p1 -n MuseScore-%{version}-alpha
 
 sed -i -e 's,qmake6,qmake-qt6,g' build.cmake buildscripts/cmake/SetupQt6.cmake
 
