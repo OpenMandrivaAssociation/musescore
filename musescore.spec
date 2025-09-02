@@ -30,6 +30,10 @@ BuildRequires:	lame-devel
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(Qt6Gui)
 BuildRequires:	cmake(Qt6GuiPrivate)
+BuildRequires:	cmake(Qt6XcbQpaPrivate)
+BuildRequires:	cmake(Qt6EglFSDeviceIntegrationPrivate)
+BuildRequires:	cmake(Qt6EglFsKmsGbmSupportPrivate)
+BuildRequires:	cmake(Qt6EglFsKmsSupportPrivate) 
 BuildRequires:	pkgconfig(Qt6Svg)
 BuildRequires:	pkgconfig(Qt6WebEngineCore)
 BuildRequires:	pkgconfig(Qt6WebEngineWidgets)
@@ -63,6 +67,7 @@ BuildRequires:	pkgconfig(libopusenc)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(harfbuzz)
 BuildRequires:	qmake-qt6
+BuildRequires:	cmake(VulkanHeaders)
 Requires:	%{name}-fonts = %{version}-%{release}
 Requires:	fonts-ttf-freefont
 Requires:	soundfont2-default
