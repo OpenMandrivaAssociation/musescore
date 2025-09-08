@@ -1,0 +1,11 @@
+diff -ru MuseScore-4.5.2.orig/buildscripts/cmake/SetupQt6.cmake MuseScore-4.5.2/buildscripts/cmake/SetupQt6.cmake
+--- MuseScore-4.5.2.orig/buildscripts/cmake/SetupQt6.cmake	2025-09-08 09:18:44.972432979 +0200
++++ MuseScore-4.5.2/buildscripts/cmake/SetupQt6.cmake	2025-09-08 09:18:58.302623674 +0200
+@@ -11,6 +11,7 @@
+ set(_components
+     Core
+     Gui
++    GuiPrivate
+     Widgets
+     Network
+     NetworkAuth

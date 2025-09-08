@@ -11,7 +11,7 @@
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
 Version:	4.5.2
-Release:	%{?beta:0.%{beta}.}5
+Release:	%{?beta:0.%{beta}.}6
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -21,6 +21,7 @@ Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 Patch1:		mscore-4.5.1-qt-6.9.patch
+Patch2:		mscore-4.5.2-qt6guiprivate.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
