@@ -22,6 +22,8 @@ Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{bet
 Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
 Patch1:		mscore-4.5.1-qt-6.9.patch
 Patch2:		mscore-4.5.2-qt6guiprivate.patch
+Patch3:		mscore-4.5.2-bad-assert.patch
+Patch4:		mscore-4.5.2-ffmpeg-compat.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel

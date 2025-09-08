@@ -1,0 +1,14 @@
+diff -ru MuseScore-4.5.2.orig/src/importexport/midi/internal/midiimport/importmidi_tuplet.cpp MuseScore-4.5.2/src/importexport/midi/internal/midiimport/importmidi_tuplet.cpp
+--- MuseScore-4.5.2.orig/src/importexport/midi/internal/midiimport/importmidi_tuplet.cpp	2025-04-24 15:59:18.000000000 +0200
++++ MuseScore-4.5.2/src/importexport/midi/internal/midiimport/importmidi_tuplet.cpp	2025-09-08 10:53:02.838353653 +0200
+@@ -895,9 +895,9 @@
+                 message += QString::number(tiedTuplet.voice) + ", chord voice = ";
+                 message += QString::number(midiChord.voice) + ", bar number (from 1) = ";
+                 message += QString::number(midiChord.barIndex + 1);
+-#endif
+                 Q_ASSERT_X(tiedTuplet.voice == midiChord.voice,
+                            "MidiTuplet::addTupletEvents", message.toLatin1().data());
++#endif
+ 
+                 for (int j: tiedTuplet.tiedNoteIndexes) {
+                     midiChord.notes[j].tuplet = it;
