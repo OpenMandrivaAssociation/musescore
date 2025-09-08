@@ -11,6 +11,18 @@ diff -ru MuseScore-4.5.2.orig/buildscripts/cmake/SetupQt6.cmake MuseScore-4.5.2/
      Widgets
      Network
      NetworkAuth
+diff -ru MuseScore-4.5.2.orig/src/appshell/CMakeLists.txt MuseScore-4.5.2/src/appshell/CMakeLists.txt
+--- MuseScore-4.5.2.orig/src/appshell/CMakeLists.txt	2025-09-08 09:18:45.212479065 +0200
++++ MuseScore-4.5.2/src/appshell/CMakeLists.txt	2025-09-08 10:43:58.547634353 +0200
+@@ -145,7 +145,7 @@
+     )
+ 
+     # we use QKeyMapper to fix https://github.com/musescore/MuseScore/issues/10181
+-    set(MODULE_INCLUDE_PRIVATE ${Qt6Gui_PRIVATE_INCLUDE_DIRS} )
++    set(MODULE_LINK Qt6::GuiPrivate)
+ endif(NOT OS_IS_MAC)
+ 
+ setup_module()
 diff -ru MuseScore-4.5.2.orig/src/framework/accessibility/CMakeLists.txt MuseScore-4.5.2/src/framework/accessibility/CMakeLists.txt
 --- MuseScore-4.5.2.orig/src/framework/accessibility/CMakeLists.txt	2025-09-08 09:18:45.396302169 +0200
 +++ MuseScore-4.5.2/src/framework/accessibility/CMakeLists.txt	2025-09-08 10:20:57.298145291 +0200
