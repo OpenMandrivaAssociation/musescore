@@ -1,0 +1,53 @@
+diff --git a/buildscripts/cmake/SetupQt6.cmake b/buildscripts/cmake/SetupQt6.cmake
+index 9507ae5..d8a9911 100644
+--- a/buildscripts/cmake/SetupQt6.cmake
++++ b/buildscripts/cmake/SetupQt6.cmake
+@@ -24,7 +24,9 @@ endif()
+ 
+ set(qt_components
+     Core
++    CorePrivate
+     Gui
++    GuiPrivate
+     Widgets
+     Network
+     Qml
+diff --git a/src/appshell/CMakeLists.txt b/src/appshell/CMakeLists.txt
+index 868dd99..240ca7c 100644
+--- a/src/appshell/CMakeLists.txt
++++ b/src/appshell/CMakeLists.txt
+@@ -139,7 +139,7 @@ if (NOT OS_IS_MAC)
+     )
+ 
+     # we use QKeyMapper to fix https://github.com/musescore/MuseScore/issues/10181
+-    set(MODULE_INCLUDE_PRIVATE ${Qt6Gui_PRIVATE_INCLUDE_DIRS} )
++    set(MODULE_LINK Qt6::GuiPrivate)
+ endif(NOT OS_IS_MAC)
+ 
+ if (QT_SUPPORT)
+diff --git a/src/appshell_web/CMakeLists.txt b/src/appshell_web/CMakeLists.txt
+index d1c2b4a..bc96592 100644
+--- a/src/appshell_web/CMakeLists.txt
++++ b/src/appshell_web/CMakeLists.txt
+@@ -53,7 +53,7 @@ set(MODULE_LINK
+     )
+ 
+ # we use QKeyMapper to fix https://github.com/musescore/MuseScore/issues/10181
+-set(MODULE_INCLUDE_PRIVATE ${Qt6Gui_PRIVATE_INCLUDE_DIRS} )
++set(MODULE_LINK Qt6::GuiPrivate)
+ 
+ if (QT_SUPPORT)
+     list(APPEND MODULE_LINK Qt::Quick)
+diff --git a/src/framework/accessibility/CMakeLists.txt b/src/framework/accessibility/CMakeLists.txt
+index cdb8c08..84190a9 100644
+--- a/src/framework/accessibility/CMakeLists.txt
++++ b/src/framework/accessibility/CMakeLists.txt
+@@ -48,7 +48,7 @@ set(MODULE_SRC
+ 
+ if (OS_IS_LIN)
+     # it needed to send a spontaneous event by activating navigation
+-    set(MODULE_INCLUDE_PRIVATE ${Qt6Core_PRIVATE_INCLUDE_DIRS})
++    set(MODULE_LINK Qt6::CorePrivate)
+ endif()
+ 
+ 

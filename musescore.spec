@@ -10,8 +10,8 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.5.2
-Release:	%{?beta:0.%{beta}.}6
+Version:	4.6.0
+Release:	%{?beta:0.%{beta}.}1
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
 # the rest is GPLv2
@@ -19,11 +19,10 @@ License:	GPLv2 and LGPLv2+ and LGPLv3
 Url:		https://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
-Patch0:		mscore-4.2.1-dont-use-gtk-platformtheme.patch
-Patch1:		mscore-4.5.1-qt-6.9.patch
-Patch2:		mscore-4.5.2-qt6guiprivate.patch
-Patch3:		mscore-4.5.2-bad-assert.patch
-Patch4:		mscore-4.5.2-ffmpeg-compat.patch
+Patch0:		mscore-4.6.0-dont-use-gtk-platformtheme.patch
+Patch1:		mscore-4.6.0-qt6guiprivate.patch
+Patch2:		mscore-4.5.2-bad-assert.patch
+Patch3:		mscore-4.5.2-ffmpeg-compat.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
@@ -126,7 +125,7 @@ sed -i 's|BUILD_SCRIPTGEN TRUE|BUILD_SCRIPTGEN FALSE|' CMakeLists.txt
 # (Fedora) Force specific compile flags:
 find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{optflags}|' {} \;
 
-%cmake \
+%cmake -G Ninja \
 	-DOMR:BOOL=ON \
 	-DOCR:BOOL=ON \
 	-DMUE_COMPILE_USE_SYSTEM_FREETYPE:BOOL=ON \
@@ -144,10 +143,10 @@ find . -name CMakeLists.txt -exec sed -i -e 's|-m32|%{optflags}|' -e 's|-O3|%{op
 	-DMUSE_APP_BUILD_MODE=release
 
 %build
-%make_build -C build
+%ninja_build -C build
 
 %install
-%make_install -C build
+%ninja_install -C build
 
 # Install fonts
 mkdir -p %{buildroot}/%{_xfontdir}/TTF
