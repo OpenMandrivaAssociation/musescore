@@ -10,7 +10,7 @@
 
 Summary:	Linux MusE Score Typesetter
 Name:		musescore
-Version:	4.6.3
+Version:	4.6.4
 Release:	%{?beta:0.%{beta}.}1
 # rtf2html is LGPLv2+
 # paper4.png paper5.png are LGPLv3
@@ -20,9 +20,7 @@ Url:		https://musescore.org
 Group:		Publishing
 Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{beta}}.tar.gz
 Patch0:		mscore-4.6.0-dont-use-gtk-platformtheme.patch
-Patch1:		mscore-4.6.0-qt6guiprivate.patch
-Patch2:		mscore-4.5.2-bad-assert.patch
-Patch3:		mscore-4.5.2-ffmpeg-compat.patch
+Patch2:		mscore-4.5.2-ffmpeg-compat.patch
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
