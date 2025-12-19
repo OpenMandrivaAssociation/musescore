@@ -22,6 +22,7 @@ Source0:	https://github.com/musescore/MuseScore/archive/v%{version}%{?beta:%{bet
 Patch0:		mscore-4.6.0-dont-use-gtk-platformtheme.patch
 Patch2:		mscore-4.5.2-ffmpeg-compat.patch
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	jackit-devel
 BuildRequires:	pkgconfig(fluidsynth)
