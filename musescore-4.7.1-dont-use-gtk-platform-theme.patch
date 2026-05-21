@@ -1,9 +1,8 @@
-diff --git a/src/app/main.cpp b/src/app/main.cpp
-index a41b69b..a1255c2 100644
---- a/src/app/main.cpp
-+++ b/src/app/main.cpp
-@@ -106,10 +106,6 @@ int main(int argc, char** argv)
- #endif
+diff -rupN MuseScore-4.7.1.old/src/app/main.cpp MuseScore-4.7.1/src/app/main.cpp
+--- MuseScore-4.7.1.old/src/app/main.cpp	2026-05-18 14:36:14.000000000 +0200
++++ MuseScore-4.7.1/src/app/main.cpp	2026-05-21 16:48:21.268248267 +0200
+@@ -93,10 +93,6 @@ int main(int argc, char** argv)
+     }
  
  #ifdef Q_OS_LINUX
 -    if (qEnvironmentVariable("MU_QT_QPA_PLATFORM") != "offscreen") {
