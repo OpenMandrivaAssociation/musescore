@@ -131,7 +131,6 @@ Group:		Publishing
 License:		GPL+ with exceptions and OFL
 BuildRequires:		fontforge
 BuildRequires:		t1utils
-BuildRequires:		tetex
 %rename	mscore-fonts
 BuildArch:		noarch
 
